@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: xuxiaocheng0201/dfg-demo
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Check rust version
+        run: rustc --version
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          path: target/release/dfg.exe
+
+
+
