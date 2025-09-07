@@ -14,6 +14,7 @@ jobs:
         with:
           repository: xuxiaocheng0201/dfg-demo
           token: ${{ secrets.GH_TOKEN }}
+          ref: condition-checker
 
       - name: Check rust version
         run: rustc --version
