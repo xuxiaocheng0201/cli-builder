@@ -53,4 +53,4 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          path: dfg_ui/build/windows/runner/Release
+          path: dfg_ui/build/windows/x64/runner/Release
