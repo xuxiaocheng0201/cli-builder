@@ -4,6 +4,10 @@ on:
   push:
   workflow_dispatch:
 
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: full
+
 jobs:
   build:
     name: Build
@@ -14,15 +18,39 @@ jobs:
         with:
           repository: xuxiaocheng0201/dfg
           token: ${{ secrets.GH_TOKEN }}
-          ref: aeb2a37990ae59f920b5c24a67ae1f6da2df2ffb
+          ref: bc19befc4858e9ad4e9fab218a8709ed8d14521c
 
       - name: Check rust version
-        run: rustc --version
+        run: rustup --version
 
-      - name: Build
-        run: cargo build --release
+      - name: Setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Check flutter version
+        run: flutter --version
+
+      - name: Install cargo tools
+        uses: taiki-e/install-action@v2
+        with:
+          tool: flutter_rust_bridge_codegen@2.11.1,cargo-expand
+
+      - name: Generate code
+        working-directory: ./dfg_ui
+        run: |
+          flutter_rust_bridge_codegen integrate --no-enable-integration-test
+          git reset --hard
+          flutter pub get
+          flutter_rust_bridge_codegen generate
+          flutter create --platforms=windows .
+
+      - name: Build release
+        working-directory: ./dfg_ui
+        run: flutter build windows --release
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          path: target/release/dfg.exe
+          path: dfg_ui/build/windows/x64/runner/Release
