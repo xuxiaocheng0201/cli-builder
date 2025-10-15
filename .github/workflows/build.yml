@@ -11,7 +11,7 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,13 +44,13 @@ jobs:
           git reset --hard
           flutter pub get
           flutter_rust_bridge_codegen generate
-          flutter create --platforms=windows .
+          flutter create --platforms=android .
 
       - name: Build release
         working-directory: ./dfg_ui
-        run: flutter build windows --release
+        run: flutter build apk --release --target-platform android-arm64
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          path: dfg_ui/build/windows/x64/runner/Release
+          path: dfg_ui/build/app/outputs/flutter-apk/app-release.apk
