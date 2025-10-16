@@ -11,14 +11,14 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           repository: xuxiaocheng0201/dfg
           token: ${{ secrets.GH_TOKEN }}
-          ref: 325880a52aac1badf51db424ff642f95da6c80a6
+          ref: 374f3cab4939ef453d33501cab11ad3ec40042ea
 
       - name: Check rust version
         run: rustup --version
@@ -44,13 +44,13 @@ jobs:
           git reset --hard
           flutter pub get
           flutter_rust_bridge_codegen generate
-          flutter create --platforms=android .
+          flutter create --platforms=windows .
 
       - name: Build release
         working-directory: ./dfg_ui
-        run: flutter build apk --release --target-platform android-arm64
+        run: flutter build windows --release
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          path: dfg_ui/build/app/outputs/flutter-apk/app-release.apk
+          path: dfg_ui/build/windows/x64/runner/Release
