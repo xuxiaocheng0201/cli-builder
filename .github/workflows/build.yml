@@ -18,39 +18,15 @@ jobs:
         with:
           repository: xuxiaocheng0201/dfg
           token: ${{ secrets.GH_TOKEN }}
-          ref: 8b86770e1aa0d5d7a90ab04eaf2e242bd426eb1c
+          ref: 399052bfdcbacb24b84ce99d434e043c989126b1
 
       - name: Check rust version
-        run: rustup --version
+        run: rustc --version
 
-      - name: Setup flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-
-      - name: Check flutter version
-        run: flutter --version
-
-      - name: Install cargo tools
-        uses: taiki-e/install-action@v2
-        with:
-          tool: flutter_rust_bridge_codegen@2.11.1,cargo-expand
-
-      - name: Generate code
-        working-directory: ./dfg_ui
-        run: |
-          flutter_rust_bridge_codegen integrate --no-enable-integration-test
-          git reset --hard
-          flutter pub get
-          flutter_rust_bridge_codegen generate
-          flutter create --platforms=windows .
-
-      - name: Build release
-        working-directory: ./dfg_ui
-        run: flutter build windows --release
+      - name: Build
+        run: cargo build --release
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          path: dfg_ui/build/windows/x64/runner/Release
+          path: target/release/dfg.exe
