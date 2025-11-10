@@ -18,10 +18,21 @@ jobs:
         with:
           repository: xuxiaocheng0201/dfg
           token: ${{ secrets.GH_TOKEN }}
-          ref: 3fbef540ef626e66e098ce8410911aaefaebfa68
+          ref: 10a58c0d8f5176374099b2a2462c9efe69b46f10
 
       - name: Check rust version
         run: rustc --version
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/target/
+          key: dfg-release-windows-x86_64
 
       - name: Build
         run: cargo build --release
