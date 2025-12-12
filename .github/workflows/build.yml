@@ -18,7 +18,7 @@ jobs:
         with:
           repository: xuxiaocheng0201/dfg
           token: ${{ secrets.GH_TOKEN }}
-          ref: 4683b03ced28c3ef83a4587f12c22af151e6f68a
+          ref: 6e1d49f39cfaf4ae681aefe47aa7847c53895512
 
       - name: Check rust version
         run: rustc --version
