@@ -14,17 +14,17 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: xuxiaocheng0201/dfg
           token: ${{ secrets.GH_TOKEN }}
-          ref: eb1926ffed1c903e2a5ccb35245e2f4b8e230881
+          ref: c45fb1f31146d845ca13502ea25f437639d181dd
 
       - name: Check rust version
         run: rustc --version
 
       - name: Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.cargo/bin/
@@ -38,6 +38,6 @@ jobs:
         run: cargo build --release
 
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           path: target/release/dfg.exe
