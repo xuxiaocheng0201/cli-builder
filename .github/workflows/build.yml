@@ -18,7 +18,7 @@ jobs:
         with:
           repository: xuxiaocheng0201/dfg
           token: ${{ secrets.GH_TOKEN }}
-          ref: 5980226978fb67b71fbe9d56e2fe70a18a22a1a9
+          ref: 8b86770e1aa0d5d7a90ab04eaf2e242bd426eb1c
 
       - name: Check rust version
         run: rustup --version
@@ -43,7 +43,7 @@ jobs:
             ./dfg_ui/rust/target/
             ./dfg_ui/.dart_tool/
             ./dfg_ui/build/
-          key: dfg-release-windows-x86_64
+          key: dfg-ui-release-windows-x86_64
 
       - name: Install cargo tools
         uses: taiki-e/install-action@v2
